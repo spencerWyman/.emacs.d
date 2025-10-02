@@ -116,6 +116,13 @@
   ;; Try `cape-dict' as an alternative.
   (text-mode-ispell-word-completion nil))
 
+;; language server (lsp-mode)
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
 
 
 ;; auto-config
@@ -129,7 +136,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(corfu doom-modeline doom-themes magit marginalia orderless
+   '(corfu doom-modeline doom-themes lsp-mode magit marginalia orderless
 	   rainbow-delimiters vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
