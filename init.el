@@ -21,7 +21,73 @@
 (setq dired-kill-when-opening-new-dired-buffer t)
 
 ;; ;; keymaps
+(use-package hydra)
+
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-o") 'other-window)
+
+
+
+;; window movement
+(winner-mode 1) ;; remember window history
+(use-package ace-window) ;; window movement convenience functions
+
+ (defhydra hydra-window ()
+   "
+Movement^^        ^Split^         ^Switch^	
+------------------------------------------------
+_j_ ←       	_v_ertical    	_b_uffer	
+_k_ ↓        	_x_ horizontal	_f_ind files	
+_i_ ↑        	_z_ undo      	_a_ce 1		
+_l_ →        	_Z_ reset      	_s_wap		
+		_D_lt Other   	_S_ave		
+_SPC_ cancel	_o_nly this   	_d_elete	
+"
+   ("j" windmove-left )
+   ("k" windmove-down )
+   ("i" windmove-up )
+   ("l" windmove-right )
+   ("b" switch-to-buffer)
+   ("f" find-file)
+   ("a" (lambda ()
+          (interactive)
+          (ace-window 1)
+          (add-hook 'ace-window-end-once-hook
+                    'hydra-window/body))
+       )
+   ("v" (lambda ()
+          (interactive)
+          (split-window-right)
+          (windmove-right))
+       )
+   ("x" (lambda ()
+          (interactive)
+          (split-window-below)
+          (windmove-down))
+       )
+   ("s" (lambda ()
+          (interactive)
+          (ace-window 4)
+          (add-hook 'ace-window-end-once-hook
+                    'hydra-window/body)))
+   ("S" save-buffer)
+   ("d" delete-window)
+   ("D" (lambda ()
+          (interactive)
+          (ace-window 16)
+          (add-hook 'ace-window-end-once-hook
+                    'hydra-window/body))
+       )
+   ("o" delete-other-windows)
+   ("z" (progn
+          (winner-undo)
+          (setq this-command 'winner-undo))
+   )
+   ("Z" winner-redo)
+   ("SPC" nil)
+   )
+
+(global-set-key (kbd "M-O") 'hydra-window/body)
 
 ;; UI configuration
 (setq inhibit-startup-message t)
@@ -35,6 +101,11 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (which-key-mode 1)
+
+;; ;; auto-resize windows
+(use-package golden-ratio
+  :init
+  (golden-ratio-mode 1))
 
 ;; ;; disable line numbers for some modes
 (dolist (mode '(org-mode-hook
