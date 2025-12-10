@@ -27,6 +27,11 @@
 (global-set-key (kbd "M-o") 'other-window)
 
 
+(defalias 'kmac-three-tiling
+  (kmacro "C-x 1 C-x 3 C-x o C-x 2 M-o M-o"))
+
+
+
 
 ;; window movement
 (winner-mode 1) ;; remember window history
@@ -34,9 +39,9 @@
 
  (defhydra hydra-window ()
    "
-Movement^^        ^Split^         ^Switch^	
-------------------------------------------------
-_j_ ←       	_v_ertical    	_b_uffer	
+Movement^^        ^Split^         ^Switch^	     ^Presets
+-----------------------------------------------------------------
+_J_ ←       	_v_ertical    	_b_uffer	     _1_ three tiling
 _k_ ↓        	_x_ horizontal	_f_ind files	
 _i_ ↑        	_z_ undo      	_a_ce 1		
 _l_ →        	_Z_ reset      	_s_wap		
@@ -85,6 +90,7 @@ _SPC_ cancel	_o_nly this   	_d_elete
    )
    ("Z" winner-redo)
    ("SPC" nil)
+   ("1" kmac-three-tiling)
    )
 
 (global-set-key (kbd "M-O") 'hydra-window/body)
