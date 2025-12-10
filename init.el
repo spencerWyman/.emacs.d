@@ -196,8 +196,8 @@ _SPC_ cancel	_o_nly this   	_d_elete
 ;; language server (lsp-mode)
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook ((c-mode-hook . lsp-deferred)
-	 (c++-mode-hook . lsp-deferred))
+  :hook ((c-mode . lsp-deferred)
+	 (c++-mode . lsp-deferred))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
@@ -220,6 +220,19 @@ _SPC_ cancel	_o_nly this   	_d_elete
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp-deferred))))
+
+
+;; custom scripts
+(defun create-cpp-project (project-name)
+  "Call the create_cpp_project.sh script to create a new C++ project."
+  (interactive "sEnter project path: ")
+  (let ((script-path "~/CS_Projects/scripts/cpp_project_gen.sh"))  ; Adjust the path if necessary
+    (if (file-exists-p script-path)
+        (progn
+          (shell-command (concat script-path " " project-name))
+          (message "C++ project '%s' created." project-name))
+      (message "Error: Script not found! Please check the path."))))
+
 
 
 ;; auto-config
