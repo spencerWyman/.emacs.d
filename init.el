@@ -221,19 +221,23 @@ _SPC_ cancel	_o_nly this   	_d_elete
                           (require 'lsp-pyright)
                           (lsp-deferred))))
 
-
 ;; custom scripts
-(defun create-cpp-project (project-name)
+(defun create-c-or-cpp-project (project-name is-cpp)
   "Call the create_cpp_project.sh script to create a new C++ project."
-  (interactive "sEnter project path: ")
   (let ((script-path "~/CS_Projects/scripts/cpp_project_gen.sh"))  ; Adjust the path if necessary
     (if (file-exists-p script-path)
         (progn
-          (shell-command (concat script-path " " project-name))
-          (message "C++ project '%s' created." project-name))
+          (shell-command (concat script-path " " project-name " " is-cpp))
+          (message "project '%s' created." project-name))
       (message "Error: Script not found! Please check the path."))))
 
+(defun create-c-project (project-name)
+  (interactive "sEnter project path: ")
+  (create-c-or-cpp-project project-name ""))
 
+(defun create-cpp-project (project-name)
+  (interactive "sEnter project path: ")
+  (create-c-or-cpp-project project-name "++"))
 
 ;; auto-config
 
@@ -246,9 +250,10 @@ _SPC_ cancel	_o_nly this   	_d_elete
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ace-window company corfu doom-modeline doom-themes golden-ratio
-		hydra lsp-mode lsp-pyright lsp-ui magit marginalia
-		orderless rainbow-delimiters vertico)))
+   '(ace-window company corfu dap-cpptools dap-mode doom-modeline
+		doom-themes golden-ratio hydra lsp-mode lsp-pyright
+		lsp-ui magit marginalia orderless rainbow-delimiters
+		vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
