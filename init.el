@@ -39,9 +39,9 @@
 
  (defhydra hydra-window ()
    "
-Movement^^        ^Split^         ^Switch^	     ^Presets
+^Movement^        ^Split^         ^Switch^	     ^Presets^
 -----------------------------------------------------------------
-_J_ ←       	_v_ertical    	_b_uffer	     _1_ three tiling
+_j_ ←       	_v_ertical    	_b_uffer	     _1_ three tiling
 _k_ ↓        	_x_ horizontal	_f_ind files	
 _i_ ↑        	_z_ undo      	_a_ce 1		
 _l_ →        	_Z_ reset      	_s_wap		
