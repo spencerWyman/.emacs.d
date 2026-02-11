@@ -203,7 +203,12 @@ _SPC_ cancel	_o_nly this   	_d_elete
   :config
   (lsp-enable-which-key-integration t))
 
-;; ;; we only use company for lsp pop-ups, otherwise use vertico
+;; ;; debugging tools (dap-mode)
+(use-package dap-mode)
+(require 'dap-cpptools)
+(dap-cpptools-setup) ;; technically only needs to run once, but is idempotenent
+
+;; ;; We only use company for lsp pop-ups, otherwise use vertico
 (use-package company
   :after lsp-mode ;; when not in lsp-mode, use vertico
   :hook (lsp-mode . company-mode)
