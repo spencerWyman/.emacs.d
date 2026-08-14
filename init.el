@@ -217,6 +217,8 @@ _SPC_ cancel	_o_nly this   	_d_elete
 
 ;; ;; emacs config for completion and mini-buffer
 (use-package emacs
+  :init
+  (setq org-agenda-files '("~/Dropbox/notes/journal" "~/Dropbox/notes" "~/Dropbox/notes/projects"))
   :custom
   ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
   ;; to switch display modes.
