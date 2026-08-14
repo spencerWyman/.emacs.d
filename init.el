@@ -226,6 +226,12 @@ _SPC_ cancel	_o_nly this   	_d_elete
                           (require 'lsp-pyright)
                           (lsp-deferred))))
 
+;; ;; SageMath
+(use-package sage-shell-mode
+  :custom (sage-shell:sage-executable "/home/spencer/miniforge3/envs/sage/bin/sage"))
+
+
+
 ;; custom scripts
 (defun create-c-or-cpp-project (project-name is-cpp)
   "Call the create_cpp_project.sh script to create a new C++ project."
@@ -257,7 +263,7 @@ _SPC_ cancel	_o_nly this   	_d_elete
  '(package-selected-packages
    '(ace-window company corfu dap-cpptools dap-mode doom-modeline
 		doom-themes golden-ratio hydra lsp-mode lsp-pyright
-		lsp-ui magit marginalia orderless rainbow-delimiters
+		lsp-ui magit marginalia orderless rainbow-delimiters sage-shell-mode
 		vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
