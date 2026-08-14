@@ -18,7 +18,8 @@
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/.saves/" t)))
 
-(setq dired-kill-when-opening-new-dired-buffer t)
+(setq dired-kill-when-opening-new-dired-buffer t) ;; prevents having a million dired buffers lying around
+(setq dired-dwim-target t) ;; useful for copying between dired buffers
 
 ;; ;; keymaps
 (use-package hydra)
