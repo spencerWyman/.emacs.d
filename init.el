@@ -42,9 +42,9 @@
    "
 ^Movement^        ^Split^         ^Switch^	     ^Presets^
 -----------------------------------------------------------------
-_j_ ←       	_v_ertical    	_b_uffer	     _1_ three tiling
-_k_ ↓        	_x_ horizontal	_f_ind files	
-_i_ ↑        	_z_ undo      	_a_ce 1		
+_j_ ←       	_v_ertical    	_b_uffer	     _1_ three tiling 
+_k_ ↓        	_x_ horizontal	_f_ind files   _2_ init file
+_i_ ↑        	_z_ undo      	_a_ce 1	     _3_ journal
 _l_ →        	_Z_ reset      	_s_wap		
 		_D_lt Other   	_S_ave		
 _SPC_ cancel	_o_nly this   	_d_elete	
@@ -92,6 +92,8 @@ _SPC_ cancel	_o_nly this   	_d_elete
    ("Z" winner-redo)
    ("SPC" nil)
    ("1" kmac-three-tiling)
+   ("2" (find-file "~/.emacs.d/init.el"))
+   ("3" (find-file "~/Dropbox/notes/journal/2026.org"))
    )
 
 (global-set-key (kbd "M-O") 'hydra-window/body)
@@ -137,6 +139,45 @@ _SPC_ cancel	_o_nly this   	_d_elete
   
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+;; org mode (builtin)
+
+;; ;; adding a bullet above the current one. Useful for my reverse chronological journal.
+(defun org-insert-heading-above ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (org-insert-heading))
+
+;; ;; unfortunate side-effect, manipulates window state. This is because we need to open the calendar buffer.
+;; ;; Luckily, I should only really use this at the beginning of the day, and there should only be the one buffer.
+(defun org-insert-date ()
+  (interactive)
+  (calendar)
+  (other-window 1)
+  (org-date-from-calendar)
+  (other-window 1)
+  (delete-window)
+  )
+
+(defun org-insert-daily-template ()
+  (interactive)
+  (let ((org-blank-before-new-entry nil))
+    (org-meta-return)
+    (org-metaright)
+    (org-insert-date)
+    (org-meta-return)
+    (org-metaright)
+    (insert "Intentions")
+    (org-meta-return)
+    (insert "Tasks")))
+
+  
+
+(use-package org
+  :bind ("C-o" . org-insert-heading-above)
+  :hook (org-mode . org-indent-mode))
+
+
 
 ;; magit
 (use-package magit)
